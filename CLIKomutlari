@@ -1,0 +1,11 @@
+Proje Oluşturma
+npx create-react-app proje-adi
+
+React için Router NPM Paketi
+npm install react-router-dom
+
+Projeyi Node.js Ayağa kaldırma
+npm start / npm start dev
+
+Projeyi Canlıya Almak için Derler
+npm build
