@@ -7,6 +7,9 @@ import Home from './Router/Home';
 import About from './Router/About';
 import NotFound from './Router/NotFound';
 import Layout from './Router/Layout';
+import TodoApp from './Memo/TodoApp';
+import UseEffectApp from './Hooks/UseEffect';
+import UseRefApp from './Hooks/UseRef';
 
 // const [count,setCount] = useState(0)
 // function myFunction(count){
@@ -37,9 +40,12 @@ function Login(){
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
-    {/*<FunctionComponent name="Taner Saydam" count={count} function={myFunction}/> 
-    <List/>*/}
+    {/* <App />
+   <FunctionComponent name="Taner Saydam" count={count} function={myFunction}/> 
+    <List/>
+    <TodoApp/>
+    <UseEffectApp/>*/}
+    <UseRefApp/>
   </React.StrictMode>
 );
 

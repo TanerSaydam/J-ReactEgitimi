@@ -9,6 +9,7 @@ export default function TodoApp() {
         setCount(c => c + 1);
     }
 
+    console.log("TodoApp çalışıyor")
     return (
         <>
             <Todo todos={todos} />

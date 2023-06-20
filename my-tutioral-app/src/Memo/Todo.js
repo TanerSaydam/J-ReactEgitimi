@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 
 function Todo(props) {
+    console.log("child çalışıyor")
     return (
         <>
             <h2>Todo Component</h2>
@@ -16,4 +17,4 @@ function Todo(props) {
     )
 }
 
-export default Todo;
+export default memo(Todo);
