@@ -9,3 +9,28 @@ npm start / npm start dev
 
 Projeyi Canlıya Almak için Derler
 npm build
+
+
+indexOf
+lastIndexOf
+setInternal
+setTimeOut
+Fetch
+axios
+Ajax
+getElementById("");
+getQuerySelector();
+getQuerySelectorAll();
+for
+for in
+for of
+foreach
+
+$.ajax({
+    method: "Post",
+    url: "api adresi",
+    body: "body",
+    success: function(data) {
+        console.log(data)
+    }
+})
