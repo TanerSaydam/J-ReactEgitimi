@@ -29,7 +29,7 @@ const Login = () => {
       password: password
     }
 
-    axios.post("http://localhost:5000/api/login",user)
+    axios.post("http://locaalhost:5000/api/login",user)
     .then(res=> {
       localStorage.setItem("accessToken", JSON.stringify(res.data.accessToken));
       navigate("/admin");

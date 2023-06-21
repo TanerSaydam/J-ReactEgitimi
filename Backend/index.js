@@ -27,7 +27,8 @@ app.get("/", (req, res)=> {
 app.post("/api/login", (req,res)=> {
     try {
         const body = req.body;
-        const {email, password} = req.body;
+        const {email, password} = req.body;        
+
         console.log(req.body);
         if(email=== "tanersaydam@gmail.com" && password === "123456"){
             const token = jwt.sign({email: email}, "secret key", {expiresIn: "30d"});
