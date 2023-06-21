@@ -18,6 +18,7 @@ function App(){
     const [moves, setMoves] = useState([]);
 
     const winnerEl = useRef();
+    const elsRef = useRef([]);
 
     function setDivMark(i){
         if(game[i] !== "") return;
@@ -56,6 +57,9 @@ function App(){
               winnerEl.current.style.display = "block";
               winnerEl.current.innerHTML = `Kazanan: ${mark}`;
               setGameOver(true);
+              elsRef.current[a].style.backgroundColor = "green";
+              elsRef.current[b].style.backgroundColor = "green";
+              elsRef.current[c].style.backgroundColor = "green";
               document.getElementById(a).style.backgroundColor = "green";
               document.getElementById(b).style.backgroundColor = "green";
               document.getElementById(c).style.backgroundColor = "green";
@@ -84,6 +88,7 @@ function App(){
                             <div
                             id={index} 
                             key={index} 
+                            ref={(e)=> elsRef.current[index] = e}
                                  className="col-4 game"
                                  onClick={()=> setDivMark(index)}>
                                 {val}
