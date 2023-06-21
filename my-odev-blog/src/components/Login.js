@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import axios from 'axios';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -7,6 +8,17 @@ const Login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const loginRef = useRef();  
+
+  useEffect(()=> {
+    // fetch("http://localhost:5000")
+    // .then(res=> res.json())
+    // .then(data=> console.log(data))
+
+    axios.get("http://localhost:5000")
+    .then(res=> {
+      console.log(res.data);
+    })
+  },[]);
 
   const checkInputValids = () =>{
     if(emailRef.current.validity.valid && passwordRef.current.validity.valid){

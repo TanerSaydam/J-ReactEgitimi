@@ -34,3 +34,13 @@ $.ajax({
         console.log(data)
     }
 })
+
+
+----------------------------
+Node.js Api Yapma
+---------------------------
+Kurulacak paketler:
+npm install express => bu paket api istekleri yazabilmemizi sağlıyor
+npm install cors => başka sitelerin bize api isteği yapabilmesini sağlıyor
+npm install jsonwebtoken => token üretmemizi ve kontrol etmemizi sağlıyor
+npm install -global nodemon => bir kere kurulsa yeter. Api sayfamızı canlı çalıştırmaya olanak sağlıyor.
