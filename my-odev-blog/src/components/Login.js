@@ -1,9 +1,21 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const loginRef = useRef();  
+
+  const checkInputValids = () =>{
+    if(emailRef.current.validity.valid && passwordRef.current.validity.valid){
+      loginRef.current.removeAttribute("disabled");
+    }else{
+      loginRef.current.setAttribute("disabled", "disabled");
+    }
+  }
+  
   const setEmailValue = (e) => {
     setEmail(e.target.value);
 
@@ -15,6 +27,8 @@ const Login = () => {
       e.target.classList.remove("is-invalid");
       e.target.classList.add("is-valid");
     }
+
+    checkInputValids();
   }
 
   const setPasswordValue = (e) => {
@@ -28,7 +42,11 @@ const Login = () => {
       e.target.classList.remove("is-invalid");
       e.target.classList.add("is-valid");
     }
+
+    checkInputValids();
   }
+
+  
 
   return (
     <div className='d-flex justify-content-center'>
@@ -43,12 +61,12 @@ const Login = () => {
                 <label htmlFor='email'>Email</label>
                 <input 
                   id="email" 
+                  ref={emailRef}
                   className='form-control' 
                   required
-                  email="true"
+                  type="email"
                   autoComplete='off'
-                  value={email}
-                  minLength={3}
+                  value={email}                  
                   onChange={setEmailValue}
                   />
                 <div className='invalid-feedback'>
@@ -59,6 +77,7 @@ const Login = () => {
               <div className='form-group mt-2'>
                 <label htmlFor='password'>Password</label>
                 <input 
+                  ref={passwordRef}
                   id="password" 
                   type='password'
                   className='form-control' 
@@ -81,7 +100,7 @@ const Login = () => {
               </div>
 
               <div className='form-group mt-2'>
-                <button disabled className='btn btn-outline-primary w-100'>Giriş Yap</button>
+                <button ref={loginRef} disabled className='btn btn-outline-primary w-100'>Giriş Yap</button>
               </div>
             </div>
           </div>
