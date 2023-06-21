@@ -1,28 +1,48 @@
 import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const emailRef = useRef();
   const passwordRef = useRef();
   const loginRef = useRef();  
 
-  useEffect(()=> {
-    // fetch("http://localhost:5000")
-    // .then(res=> res.json())
-    // .then(data=> console.log(data))
+  // useEffect(()=> {
+  //   // fetch("http://localhost:5000")
+  //   // .then(res=> res.json())
+  //   // .then(data=> console.log(data))
 
-    axios.get("http://localhost:5000")
+  //   axios.get("http://localhost:5000")
+  //   .then(res=> {
+  //     console.log(res.data);
+  //   })
+  // },[]);
+
+  const login = () => {
+    const user = {
+      email: email,
+      password: password
+    }
+
+    axios.post("http://localhost:5000/api/login",user)
     .then(res=> {
-      console.log(res.data);
+      localStorage.setItem("accessToken", JSON.stringify(res.data.accessToken));
+      navigate("/admin");
     })
-  },[]);
+    .catch(err=> {
+      console.log(err)
+    })
+  }
 
   const checkInputValids = () =>{
     if(emailRef.current.validity.valid && passwordRef.current.validity.valid){
       loginRef.current.removeAttribute("disabled");
+      loginRef.current.addEventListener("click", login);
     }else{
       loginRef.current.setAttribute("disabled", "disabled");
     }
