@@ -1,5 +1,7 @@
+import axios from "axios";
+import { get } from "mongoose";
 import Head from "next/head";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
   const [work, setWork] = useState("");
@@ -7,17 +9,55 @@ export default function Home() {
 
   const elRefs = useRef([]);
 
+  function getAll(){
+    fetch("/api/get")
+    .then(res=> res.json())
+    .then(data => {
+      setTodos(data);
+    });
+  }
+
+  useEffect(()=> {
+    getAll();
+  },[])
+
+
   const handleChange = (e) => {
     setWork(e.target.value);
 
     if (!e.target.validity.valid) {
       e.target.className = "form-control is-invalid";
-      elRefs.current["save"].removeAttribute("disabled")
+      //elRefs.current["save"].setAttribute("disabled", "disabled")
     }
     else {
-      elRefs.current["save"].setAttribute("disabled", "disabled")
       e.target.className = "form-control is-valid";
+      //elRefs.current["save"].removeAttribute("disabled");
+      //elRefs.current["save"].addEventListener("click", save);
     }
+  }
+
+  function save(){
+    let data = {
+      work: work,
+      isCompleted : false
+    }
+
+    axios.post("/api/add", data)
+    .then(res=> {
+      console.log(res.data);
+      getAll();
+      setWork("");
+    })
+
+  }
+
+  async function remove(todo){
+    let isConfirm = confirm("Kaydı silmek istiyor musunuz?")
+    if(isConfirm){
+      let result = await axios.post("/api/remove", todo);
+
+      getAll();
+    }    
   }
 
 
@@ -46,11 +86,24 @@ export default function Home() {
             </div>
           </div>
           <div className="form-group mt-2">
-            <button
-              disabled
+            <button              
+              onClick={save}
               className="btn btn-primary w-100"
               ref={(ref) => elRefs.current["save"] = ref}>
               Kaydet
+            </button>
+          </div>
+          <div 
+            ref={(res)=> elRefs.current["update-div"] = ref} className="form-group mt-2">
+          <button              
+              onClick={save}
+              className="btn btn-warning w-100">
+              Güncelle
+            </button>
+            <button              
+              onClick={save}
+              className="btn btn-danger w-100">
+              Vazgeç
             </button>
           </div>
           <hr />
@@ -66,15 +119,17 @@ export default function Home() {
               </thead>
               <tbody>
                 {todos.map((val, index) => {
-                  <tr key={index}>
+                  return (<tr key={index}>
                     <td>{index + 1}</td>
                     <td>{val.work}</td>
                     <td>{val.isCompleted}</td>
                     <td>
                       <button className="btn btn-outline-warning btn-sm">Güncelle</button>
-                      <button className="btn btn-outline-danger btn-sm mx-1">Sil</button>
+                      <button
+                      onClick={()=> remove(val)}
+                      className="btn btn-outline-danger btn-sm mx-1">Sil</button>
                     </td>
-                  </tr>
+                  </tr>)
                 })}
               </tbody>
             </table>
