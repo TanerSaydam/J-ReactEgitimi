@@ -7,6 +7,8 @@ export default function Home() {
   const [work, setWork] = useState("");
   const [todos, setTodos] = useState([]);
 
+  const [updateWork, setUpdateWork] = useState({});
+
   const elRefs = useRef([]);
 
   function getAll(){
@@ -60,6 +62,33 @@ export default function Home() {
     }    
   }
 
+  function get(todo){
+    setUpdateWork(todo);
+    setWork(todo.work);
+
+    elRefs.current["update-div"].removeAttribute("hidden");
+    elRefs.current["add-div"].setAttribute("hidden","hidden");
+  }
+
+  function cancel(){
+    setWork("");
+    setUpdateWork({});
+
+    elRefs.current["update-div"].setAttribute("hidden","hidden");
+    elRefs.current["add-div"].removeAttribute("hidden");
+  }
+
+  async function update(){
+    let todo = updateWork;
+    todo.work = work;
+
+    let result = await axios.post("/api/update", todo);
+
+    getAll();
+    cancel();
+  }
+  
+
 
   return (
     <>
@@ -85,7 +114,9 @@ export default function Home() {
               En az 3 karakter yazmalısınız!
             </div>
           </div>
-          <div className="form-group mt-2">
+          <div 
+          ref={(ref)=> elRefs.current["add-div"] = ref}
+          className="form-group mt-2">
             <button              
               onClick={save}
               className="btn btn-primary w-100"
@@ -94,16 +125,18 @@ export default function Home() {
             </button>
           </div>
           <div 
-            ref={(res)=> elRefs.current["update-div"] = ref} className="form-group mt-2">
+            ref={(ref)=> elRefs.current["update-div"] = ref} 
+            className="form-group mt-2"
+            hidden>
           <button              
-              onClick={save}
+              onClick={update}
               className="btn btn-warning w-100">
-              Güncelle
+              <i className="fa fa-edit"></i> Güncelle
             </button>
             <button              
-              onClick={save}
-              className="btn btn-danger w-100">
-              Vazgeç
+              onClick={cancel}
+              className="btn btn-danger w-100 mt-1">
+              <i className="fa fa-x"></i> Vazgeç
             </button>
           </div>
           <hr />
@@ -124,10 +157,18 @@ export default function Home() {
                     <td>{val.work}</td>
                     <td>{val.isCompleted}</td>
                     <td>
-                      <button className="btn btn-outline-warning btn-sm">Güncelle</button>
+                      <button 
+                      onClick={()=> get(val)}
+                      className="btn btn-outline-warning btn-sm"
+                      title="Güncelle">
+                        <i className="fa fa-edit"></i>
+                      </button>
                       <button
                       onClick={()=> remove(val)}
-                      className="btn btn-outline-danger btn-sm mx-1">Sil</button>
+                      className="btn btn-outline-danger btn-sm mx-1"
+                      title="Sil">
+                        <i className="fa fa-trash"></i>
+                      </button>
                     </td>
                   </tr>)
                 })}
