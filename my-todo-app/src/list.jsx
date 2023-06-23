@@ -1,6 +1,9 @@
 import React from 'react'
+import { useContext } from 'react'
+import { themeContext } from './add'
 
 export default function List(props) {
+  const theme = useContext(themeContext)
   return (
     <ul ref={props.ulRef}>
       {

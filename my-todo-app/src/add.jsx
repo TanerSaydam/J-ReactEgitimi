@@ -1,6 +1,26 @@
 import React from 'react'
+import { createContext } from 'react';
+import { useEffect } from 'react'
+import { useState } from 'react'
+
+export const themeContext = createContext("Light");
 
 export default function Add(props) {
+
+  //const [name, setName]=useState("");
+
+  //setName(prev => prev + "asdasd");
+
+  const [count,setCount] = useState(0);
+  
+  function getList(){
+    //asdasd
+  }
+
+  useEffect(()=> {
+    getList();
+  },[count]);
+
   return (
     <>
     Work

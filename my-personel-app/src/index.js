@@ -6,6 +6,7 @@ import AddUser from './components/ui/AddUser';
 import UpdateUser from './components/ui/UpdateUser';
 import Login from './components/auth/Login';
 import NotFound from './components/404';
+import Report from './components/ui/Report';
 import useAuth from './components/auth/useAuth';
 
 function ProtectedRoute({children}){

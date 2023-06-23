@@ -7,7 +7,7 @@ import useAuth from './useAuth';
 import Layout from './Layout';
 
 function ProtectedRoute({children}){
-  const {token} = useAuth();
+  const {token, saveToken} = useAuth();
   return token ? children : <Navigate to="/login"/>
 }
 
