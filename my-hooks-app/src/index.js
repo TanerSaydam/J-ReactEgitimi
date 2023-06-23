@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react';
 import ReactDOM from 'react-dom/client';
+import Todo from './todo.js';
 
 const NameContext = createContext("İsim Soyisim");
 
@@ -55,5 +56,5 @@ function Component4(){
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(  
-    <App />  
+    <Todo/>
 );
