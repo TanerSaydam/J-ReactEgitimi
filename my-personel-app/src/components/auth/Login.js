@@ -55,8 +55,8 @@ export default function Login() {
           <div className='card'>
             <div className='card-header'>
               <h1>Login Page</h1>
-            </div>
-            <div className='card-body'>
+            </div>            
+            <div id="card" className='card-body'>
               <form onSubmit={login}>
                 <div className='form-group'>
                   Email
@@ -84,7 +84,9 @@ export default function Login() {
                   
                 </div>
                 <div className='form-group mt-2'>
-                  <button className='btn btn-success w-100'>Giriş Yap</button>
+                  <button className='btn btn-success w-100'>
+                    Giriş Yap
+                    </button>  
                 </div>
               </form>
             </div>
