@@ -1,10 +1,13 @@
 import ReactDOM from 'react-dom/client';
 import {useState, useRef} from 'react';
+import Add from './add';
+import List from './list';
 
 function App(){
   const [work,setWork] = useState("");
   const [todos, setTodos] = useState([]);
   const [updateIndex,setUpdateIndex] = useState(0);
+  const refs = useRef([]);
 
   const addRef = useRef();
   const updateRef = useRef();
@@ -55,25 +58,13 @@ function App(){
 
   return(
     <>
-    Work
-    <input 
-      value={work} 
-      onChange={(e)=> setWork(e.target.value)}/>
-    <button ref={addRef} onClick={add}>Ekle</button>
-    <button ref={updateRef} onClick={update} hidden="hidden">Güncelle</button>
-    <button ref={cancelRef} onClick={cancel} hidden="hidden">Vazgeç</button>
+    {/* Ekleme işlemini index sayfasından add sayfasına taşıdım. Add sayfasında kullanmam gereken metot ve propertyleri props olarak gönderdim */}
+    <Add work={work} setWork={setWork} addRef={addRef} add={add} update={update} cancel={cancel} updateRef={updateRef} cancelRef={cancelRef}/>
     <hr/>
-    <ul ref={ulRef}>
-      {
-        todos.map((val,index)=> {
-          return <li key={index}>
-            {val}
-            <button onClick={()=> get(index)}>Güncelle</button>
-            <button onClick={()=> remove(index)}>Sil</button>
-          </li>
-        })
-      }
-    </ul>
+
+
+    {/* Listeleme işelmini indexsayfasından list sayfasına taşıdım List sayfasında kullanmam gereken metot ve propertyleri props olarak gönderdim. */}
+    <List ulRef={ulRef} todos={todos} get={get} remove={remove}/>
     </>
   )
 }

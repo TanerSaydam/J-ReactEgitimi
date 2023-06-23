@@ -1,8 +1,15 @@
 import ReactDOM from 'react-dom/client';
-import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom'
 import Home from './Home';
 import About from './About';
 import Login from './Login';
+import useAuth from './useAuth';
+import Layout from './Layout';
+
+function ProtectedRoute({children}){
+  const {token} = useAuth();
+  return token ? children : <Navigate to="/login"/>
+}
 
 function App(){
   return (
@@ -10,8 +17,14 @@ function App(){
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Layout/>}>
-          <Route index element={<Home/>}/>
-          <Route path='about' element={<About/>}/>
+          <Route index element={
+            <ProtectedRoute>
+                <Home/>
+            </ProtectedRoute> }/>
+          <Route path='about' element={ 
+            <ProtectedRoute>
+                <About/>
+            </ProtectedRoute>}/>
           <Route path='login' element={<Login/>}/>
         </Route>
       </Routes>
